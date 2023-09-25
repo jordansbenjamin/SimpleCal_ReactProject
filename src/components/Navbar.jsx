@@ -1,6 +1,7 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
+import NavButton from './Buttons';
 // import NavDropdown from 'react-bootstrap/NavDropdown';
 
 export default function NavbarHeader() {
@@ -11,19 +12,10 @@ export default function NavbarHeader() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link href="#home" className='fs-5'>Set Daily Limit</Nav.Link>
-            <Nav.Link href="#link" className='fs-5'>Reset</Nav.Link>
-            {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
-                Another action
-              </NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">
-                Separated link
-              </NavDropdown.Item>
-            </NavDropdown> */}
+            {/* <Nav.Link href="#home" className='fs-5'>Set Daily Limit</Nav.Link> */}
+            <NavButton>Set Daily Limit</NavButton>
+            <NavButton>Reset</NavButton>
+            {/* <Nav.Link href="#link" className='fs-5'>Reset</Nav.Link> */}
           </Nav>
         </Navbar.Collapse>
       </Container>
