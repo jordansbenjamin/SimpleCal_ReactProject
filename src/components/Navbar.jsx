@@ -13,7 +13,7 @@ export default function NavbarHeader() {
           <Nav className="ms-auto">
             {/* <Nav.Link href="#home" className='fs-5'>Set Daily Limit</Nav.Link> */}
             <NavButton>Set Daily Limit</NavButton>
-            <NavButton>Reset</NavButton>
+            <NavButton btnType="btn-danger">Reset</NavButton>
             {/* <Nav.Link href="#link" className='fs-5'>Reset</Nav.Link> */}
           </Nav>
         </Navbar.Collapse>
