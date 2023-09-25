@@ -1,3 +1,4 @@
+import FilterContainer from './components/Filter';
 import NavbarHeader from './components/Navbar';
 import ProgBarComp from './components/ProgressBar';
 import DisplayStats from './components/Stats';
@@ -8,6 +9,7 @@ export default function App() {
       <NavbarHeader/>
       <DisplayStats/>
       <ProgBarComp/>
+      <FilterContainer/>
     </div>
   );
 }
