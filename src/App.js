@@ -1,4 +1,5 @@
 import NavbarHeader from './components/Navbar';
+import ProgBarComp from './components/ProgressBar';
 import DisplayStats from './components/Stats';
 
 export default function App() {
@@ -6,6 +7,7 @@ export default function App() {
     <div>
       <NavbarHeader/>
       <DisplayStats/>
+      <ProgBarComp/>
     </div>
   );
 }
