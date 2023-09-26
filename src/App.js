@@ -15,10 +15,18 @@ export default function App() {
 	let caloriesConsumed = meals.map((meal) => meal.calories).reduce((acc, cur) => acc + cur, 0);
 	let caloriesBurned = workouts.map((workout) => workout.calories).reduce((acc, cur) => acc + cur, 0);
 	let caloriesRemaining = dailyLimit - caloriesConsumed + caloriesBurned;
-  let gainLoss = caloriesConsumed - caloriesBurned;
+	let gainLoss = caloriesConsumed - caloriesBurned;
 
 	function handleAddMeals(meal) {
 		setMeals((prevMeals) => [...prevMeals, meal]);
+	}
+
+	function handleRemoveMeal(id) {
+		const isConfirmed = window.confirm("Are you sure you want to delete this item?");
+
+		if (isConfirmed) {
+			setMeals((prevMeals) => prevMeals.filter((meal) => meal.id !== id));
+		}
 	}
 
 	function handleAddWorkouts(workout) {
@@ -28,7 +36,13 @@ export default function App() {
 	return (
 		<div>
 			<NavbarHeader />
-			<DisplayStats dailyLimit={dailyLimit} caloriesConsumed={caloriesConsumed} caloriesBurned={caloriesBurned} caloriesRemaining={caloriesRemaining} gainLoss={gainLoss}/>
+			<DisplayStats
+				dailyLimit={dailyLimit}
+				caloriesConsumed={caloriesConsumed}
+				caloriesBurned={caloriesBurned}
+				caloriesRemaining={caloriesRemaining}
+				gainLoss={gainLoss}
+			/>
 			<ProgBarComp />
 			<FilterContainer />
 			<ItemsContainer
@@ -36,6 +50,7 @@ export default function App() {
 				workouts={workouts}
 				handleAddMeals={handleAddMeals}
 				handleAddWorkouts={handleAddWorkouts}
+				onRemoveMeal={handleRemoveMeal}
 			/>
 		</div>
 	);

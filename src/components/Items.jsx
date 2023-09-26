@@ -4,13 +4,13 @@ import { useState } from "react";
 import { Button } from "react-bootstrap";
 import Collapse from "react-bootstrap/Collapse";
 
-export default function ItemsContainer({meals, workouts, handleAddMeals, handleAddWorkouts}) {
-
+export default function ItemsContainer({ meals, workouts, handleAddMeals, handleAddWorkouts, onRemoveMeal }) {
 	return (
 		<section className="mx-5">
 			<div className="row g-4">
 				<ItemFormContainer
 					onAdditems={handleAddMeals}
+					onRemoveMeal={onRemoveMeal}
 					subheading="Meals"
 					itemType="Meal"
 					btnType="primary"
@@ -30,7 +30,7 @@ export default function ItemsContainer({meals, workouts, handleAddMeals, handleA
 	);
 }
 
-function ItemFormContainer({ subheading, itemType, btnType, borderType, onAdditems, items }) {
+function ItemFormContainer({ subheading, itemType, btnType, borderType, onAdditems, items, onRemoveMeal }) {
 	const [open, setOpen] = useState(false);
 	const [itemName, setItemName] = useState("");
 	const [calories, setCalories] = useState("");
@@ -45,10 +45,10 @@ function ItemFormContainer({ subheading, itemType, btnType, borderType, onAddite
 		const newItem = {
 			itemName,
 			calories,
-			id
+			id,
 		};
 
-		console.log(newItem)
+		console.log(newItem);
 
 		onAdditems(newItem);
 
@@ -94,12 +94,12 @@ function ItemFormContainer({ subheading, itemType, btnType, borderType, onAddite
 				</div>
 			</Collapse>
 
-			<ItemsList items={items} />
+			<ItemsList items={items} onRemoveMeal={onRemoveMeal}/>
 		</div>
 	);
 }
 
-function Item({ itemName, calories }) {
+function Item({ itemName, calories, onRemoveMeal, item }) {
 	return (
 		<div>
 			<div className="card my-2">
@@ -107,7 +107,7 @@ function Item({ itemName, calories }) {
 					<div className="d-flex align-items-center justify-content-between">
 						<h3 className="mx-1">{itemName}</h3>
 						<div className="fs-1 bg-primary text-white text-center rounded-2 px-2 px-sm-5">{calories}</div>
-						<Button className="delete btn btn-danger btn-sm mx-2">
+						<Button className="delete btn btn-danger btn-sm mx-2" onClick={() => onRemoveMeal(item.id)}>
 							<i className="bi bi-x"></i>
 						</Button>
 					</div>
@@ -117,11 +117,11 @@ function Item({ itemName, calories }) {
 	);
 }
 
-function ItemsList({ items }) {
+function ItemsList({ items, onRemoveMeal }) {
 	return (
 		<>
 			{items.map((item) => (
-				<Item itemName={item.itemName} calories={item.calories} key={item.id}/>
+				<Item itemName={item.itemName} calories={item.calories} key={item.id} onRemoveMeal={onRemoveMeal} item={item} />
 			))}
 		</>
 	);
