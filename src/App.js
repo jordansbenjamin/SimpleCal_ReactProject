@@ -7,8 +7,15 @@ import DisplayStats from "./components/Stats";
 
 export default function App() {
 	// State required to be lifted here in order to be used with other components
+	const [dailyLimit, setDailyLimit] = useState(2000);
 	const [meals, setMeals] = useState([]);
 	const [workouts, setWorkouts] = useState([]);
+
+	// Derived state
+	let caloriesConsumed = meals.map((meal) => meal.calories).reduce((acc, cur) => acc + cur, 0);
+	let caloriesBurned = workouts.map((workout) => workout.calories).reduce((acc, cur) => acc + cur, 0);
+	let caloriesRemaining = dailyLimit - (caloriesConsumed);
+  let gainLoss = caloriesConsumed - caloriesBurned;
 
 	function handleAddMeals(meal) {
 		setMeals((prevMeals) => [...prevMeals, meal]);
@@ -21,7 +28,7 @@ export default function App() {
 	return (
 		<div>
 			<NavbarHeader />
-			<DisplayStats />
+			<DisplayStats dailyLimit={dailyLimit} caloriesConsumed={caloriesConsumed} caloriesBurned={caloriesBurned} caloriesRemaining={caloriesRemaining} gainLoss={gainLoss}/>
 			<ProgBarComp />
 			<FilterContainer />
 			<ItemsContainer
