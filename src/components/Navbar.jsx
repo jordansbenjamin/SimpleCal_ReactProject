@@ -7,11 +7,23 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 
-export default function NavbarHeader() {
+export default function NavbarHeader({ onSetDailyLimit, dailyLimit }) {
 	const [show, setShow] = useState(false);
+  const [calories, setCalories] = useState("");
 
-	const handleClose = () => setShow(false);
+  const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
+
+	function handleSubmit(e) {
+		e.preventDefault();
+
+    if (!calories) return;
+    
+    onSetDailyLimit(calories);
+
+    setCalories('');
+    setShow(!show);
+	}
 
 	return (
 		<Navbar expand="lg" className="bg-body-tertiary">
@@ -27,14 +39,20 @@ export default function NavbarHeader() {
 						<Modal.Header closeButton>
 							<Modal.Title>Set Daily Limit</Modal.Title>
 						</Modal.Header>
-						<Form className="mx-3 my-3">
+						<Form className="mx-3 my-3" onSubmit={handleSubmit}>
 							<Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
 								<Form.Label>Daily Calorie Limit</Form.Label>
-								<Form.Control type="email" placeholder="Some calorie..." autoFocus />
+								<Form.Control
+									value={calories}
+									onChange={(e) => setCalories(+e.target.value)}
+									type="text"
+									placeholder="Some calorie..."
+									autoFocus
+								/>
 							</Form.Group>
 						</Form>
 						<Modal.Footer>
-							<Button variant="primary" onClick={handleClose}>
+							<Button type="submit" variant="primary">
 								Save Changes
 							</Button>
 						</Modal.Footer>

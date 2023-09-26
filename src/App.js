@@ -17,12 +17,12 @@ export default function App() {
 	let caloriesRemaining = dailyLimit - caloriesConsumed + caloriesBurned;
 	let gainLoss = caloriesConsumed - caloriesBurned;
 
-  // Handler functions
+	// Handler functions
 
-  // CONTINUE WORKING ON THIS
-  function handleDailyLimit() {
-    setDailyLimit((dailyLimit) => dailyLimit)
-  }
+	// CONTINUE WORKING ON THIS
+	function handleDailyLimit(newLimit) {
+		setDailyLimit((dailyLimit) => newLimit);
+	}
 
 	function handleAddMeals(meal) {
 		setMeals((prevMeals) => [...prevMeals, meal]);
@@ -36,7 +36,7 @@ export default function App() {
 		}
 	}
 
-  function handleRemoveWorkout(id) {
+	function handleRemoveWorkout(id) {
 		const isConfirmed = window.confirm("Are you sure you want to delete this item?");
 
 		if (isConfirmed) {
@@ -50,7 +50,7 @@ export default function App() {
 
 	return (
 		<div>
-			<NavbarHeader onSetDailyLimi={handleDailyLimit}/>
+			<NavbarHeader onSetDailyLimit={handleDailyLimit} dailyLimit={dailyLimit}/>
 			<DisplayStats
 				dailyLimit={dailyLimit}
 				caloriesConsumed={caloriesConsumed}
@@ -66,7 +66,7 @@ export default function App() {
 				handleAddMeals={handleAddMeals}
 				handleAddWorkouts={handleAddWorkouts}
 				onRemoveMeal={handleRemoveMeal}
-        onRemoveWorkout={handleRemoveWorkout}
+				onRemoveWorkout={handleRemoveWorkout}
 			/>
 		</div>
 	);
