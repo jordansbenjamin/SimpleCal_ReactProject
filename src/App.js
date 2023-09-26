@@ -17,6 +17,13 @@ export default function App() {
 	let caloriesRemaining = dailyLimit - caloriesConsumed + caloriesBurned;
 	let gainLoss = caloriesConsumed - caloriesBurned;
 
+  // Handler functions
+
+  // CONTINUE WORKING ON THIS
+  function handleDailyLimit() {
+    setDailyLimit((dailyLimit) => dailyLimit)
+  }
+
 	function handleAddMeals(meal) {
 		setMeals((prevMeals) => [...prevMeals, meal]);
 	}
@@ -43,7 +50,7 @@ export default function App() {
 
 	return (
 		<div>
-			<NavbarHeader />
+			<NavbarHeader onSetDailyLimi={handleDailyLimit}/>
 			<DisplayStats
 				dailyLimit={dailyLimit}
 				caloriesConsumed={caloriesConsumed}
