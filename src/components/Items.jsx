@@ -4,19 +4,58 @@ import { useState } from "react";
 import { Button } from "react-bootstrap";
 import Collapse from "react-bootstrap/Collapse";
 
-export default function ItemsContainer() {
+export default function ItemsContainer({meals, workouts, handleAddMeals, handleAddWorkouts}) {
+
 	return (
 		<section className="mx-5">
 			<div className="row g-4">
-				<ItemFormContainer subheading="Meals" itemName="Meal" btnType="primary" borderType="primary" />
-				<ItemFormContainer subheading="Workouts" itemName="Workout" btnType="primary" borderType="primary" />
+				<ItemFormContainer
+					onAdditems={handleAddMeals}
+					subheading="Meals"
+					itemType="Meal"
+					btnType="primary"
+					borderType="primary"
+					items={meals}
+				/>
+				<ItemFormContainer
+					onAdditems={handleAddWorkouts}
+					subheading="Workouts"
+					itemType="Workout"
+					btnType="primary"
+					borderType="primary"
+					items={workouts}
+				/>
 			</div>
 		</section>
 	);
 }
 
-function ItemFormContainer({ subheading, itemName, btnType, borderType }) {
+function ItemFormContainer({ subheading, itemType, btnType, borderType, onAdditems, items }) {
 	const [open, setOpen] = useState(false);
+	const [itemName, setItemName] = useState("");
+	const [calories, setCalories] = useState("");
+
+	function handleSubmit(e) {
+		e.preventDefault();
+
+		if (!itemName || !calories) return;
+
+		const id = crypto.randomUUID();
+
+		const newItem = {
+			itemName,
+			calories,
+			id
+		};
+
+		console.log(newItem)
+
+		onAdditems(newItem);
+
+		setItemName("");
+		setCalories("");
+		setOpen(!open);
+	}
 
 	return (
 		<div className="col-md-6">
@@ -25,41 +64,51 @@ function ItemFormContainer({ subheading, itemName, btnType, borderType }) {
 				<h2 className={`border-start border-${borderType} border-3 p-2`}>{subheading}</h2>
 				<ItemButton btnType={btnType} onClick={() => setOpen(!open)} aria-controls="collapse" aria-expanded={open}>
 					<i className="bi bi-plus fs-6"></i>
-					Add {itemName}
+					Add {itemType}
 				</ItemButton>
 			</div>
-
-			<Item />
 
 			{/* COLLAPSEABLE ELEMENT */}
 
 			<Collapse in={open}>
 				<div className="card card-body bg-light">
-					<form>
+					<form onSubmit={handleSubmit}>
 						<div className="mb-3">
-							<input type="text" className="form-control" placeholder={`Enter ${itemName}...`}></input>
+							<input
+								value={itemName}
+								onChange={(e) => setItemName(e.target.value)}
+								type="text"
+								className="form-control"
+								placeholder={`Enter ${itemType}...`}></input>
 						</div>
 						<div className="mb-3">
-							<input type="text" className="form-control" placeholder="Enter Calories..."></input>
+							<input
+								value={calories}
+								onChange={(e) => setCalories(+e.target.value)}
+								type="text"
+								className="form-control"
+								placeholder="Enter Calories..."></input>
 						</div>
-						<Button>Add</Button>
+						<Button type="submit">Add</Button>
 					</form>
 				</div>
 			</Collapse>
+
+			<ItemsList items={items} />
 		</div>
 	);
 }
 
-function Item() {
+function Item({ itemName, calories }) {
 	return (
 		<div>
 			<div className="card my-2">
 				<div className="card-body">
 					<div className="d-flex align-items-center justify-content-between">
-						<h3 className="mx-1">Breakfast</h3>
-						<div className="fs-1 bg-primary text-white text-center rounded-2 px-2 px-sm-5">500</div>
+						<h3 className="mx-1">{itemName}</h3>
+						<div className="fs-1 bg-primary text-white text-center rounded-2 px-2 px-sm-5">{calories}</div>
 						<Button className="delete btn btn-danger btn-sm mx-2">
-							<i class="bi bi-x"></i>
+							<i className="bi bi-x"></i>
 						</Button>
 					</div>
 				</div>
@@ -67,3 +116,23 @@ function Item() {
 		</div>
 	);
 }
+
+function ItemsList({ items }) {
+	return (
+		<>
+			{items.map((item) => (
+				<Item itemName={item.itemName} calories={item.calories} key={item.id}/>
+			))}
+		</>
+	);
+}
+
+// NOTES:
+
+// Now need to figure out how to add the items reactively only to then focus on state management
+
+// When a new meal or workout item is added, a new Item component will be added to a piece of state holding the items?
+
+// I would probably need 2 pieces of state, meal and workout each
+
+// I also need to figure out how to differentiate which items are a workout or meal
