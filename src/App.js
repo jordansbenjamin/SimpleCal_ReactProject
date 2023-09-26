@@ -19,7 +19,12 @@ export default function App() {
 
 	// Handler functions
 
-	// CONTINUE WORKING ON THIS
+	function handleReset() {
+		setDailyLimit(2000);
+		setMeals([]);
+		setWorkouts([]);
+	}
+
 	function handleDailyLimit(newLimit) {
 		setDailyLimit((dailyLimit) => newLimit);
 	}
@@ -50,7 +55,7 @@ export default function App() {
 
 	return (
 		<div>
-			<NavbarHeader onSetDailyLimit={handleDailyLimit} dailyLimit={dailyLimit}/>
+			<NavbarHeader onSetDailyLimit={handleDailyLimit} onReset={handleReset} />
 			<DisplayStats
 				dailyLimit={dailyLimit}
 				caloriesConsumed={caloriesConsumed}

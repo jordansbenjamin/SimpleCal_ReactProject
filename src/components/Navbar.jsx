@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 
-export default function NavbarHeader({ onSetDailyLimit, dailyLimit }) {
+export default function NavbarHeader({ onSetDailyLimit, onReset}) {
 	const [show, setShow] = useState(false);
   const [calories, setCalories] = useState("");
 
@@ -18,7 +18,7 @@ export default function NavbarHeader({ onSetDailyLimit, dailyLimit }) {
 		e.preventDefault();
 
     if (!calories) return;
-    
+
     onSetDailyLimit(calories);
 
     setCalories('');
@@ -33,7 +33,7 @@ export default function NavbarHeader({ onSetDailyLimit, dailyLimit }) {
 				</Navbar.Brand>
 				<Nav className="ms-auto">
 					<NavButton handler={handleShow}>Set Daily Limit</NavButton>
-					<NavButton btnType="btn-danger">Reset</NavButton>
+					<NavButton handler={onReset} btnType="btn-danger">Reset</NavButton>
 
 					<Modal show={show} onHide={handleClose}>
 						<Modal.Header closeButton>
