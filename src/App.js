@@ -14,7 +14,7 @@ export default function App() {
 	// Derived state
 	let caloriesConsumed = meals.map((meal) => meal.calories).reduce((acc, cur) => acc + cur, 0);
 	let caloriesBurned = workouts.map((workout) => workout.calories).reduce((acc, cur) => acc + cur, 0);
-	let caloriesRemaining = dailyLimit - (caloriesConsumed);
+	let caloriesRemaining = dailyLimit - caloriesConsumed + caloriesBurned;
   let gainLoss = caloriesConsumed - caloriesBurned;
 
 	function handleAddMeals(meal) {
