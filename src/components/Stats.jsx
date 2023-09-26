@@ -3,7 +3,7 @@ export default function DisplayStats({dailyLimit, caloriesConsumed, caloriesBurn
 		<div className="my-5 px-5">
 			<div className="row g-3 my-3 text-center">
 				<Stat type="Daily Calorie Limit ⚖️" amount={dailyLimit} containerClass="col-md-6" statClass="bg-dark text-white" />
-				<Stat type={`Gain/Loss ${gainLoss > 0 ? '📈' : '📉'}`} amount={gainLoss} containerClass="col-md-6" statClass={`bg-${gainLoss > 0 ? 'success' : 'danger'} text-white`} />
+				<Stat type={`Gain/Loss ${gainLoss > 0 ? '📈' : '📉'}`} amount={gainLoss} containerClass="col-md-6" statClass={`bg-${gainLoss >= 0 ? 'success' : 'danger'} text-white`} />
 			</div>
 			<div className="row g-3 text-center">
 				<Stat type="Calories Consumed 🌯" amount={caloriesConsumed} containerClass="col-md-4" statClass="card bg-light" />

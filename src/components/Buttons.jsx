@@ -1,9 +1,9 @@
 import Button from "react-bootstrap/Button";
 
-export default function NavButton({ children, btnType }) {
+export default function NavButton({ children, btnType, handler }) {
 	return (
 		<>
-			<Button className={`mx-1 ${btnType}`}>{children}</Button>
+			<Button className={`mx-1 ${btnType}`} onClick={handler}>{children}</Button>
 		</>
 	);
 }
