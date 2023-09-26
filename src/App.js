@@ -29,6 +29,14 @@ export default function App() {
 		}
 	}
 
+  function handleRemoveWorkout(id) {
+		const isConfirmed = window.confirm("Are you sure you want to delete this item?");
+
+		if (isConfirmed) {
+			setWorkouts((prevWorkouts) => prevWorkouts.filter((workout) => workout.id !== id));
+		}
+	}
+
 	function handleAddWorkouts(workout) {
 		setWorkouts((prevWorkouts) => [...prevWorkouts, workout]);
 	}
@@ -51,6 +59,7 @@ export default function App() {
 				handleAddMeals={handleAddMeals}
 				handleAddWorkouts={handleAddWorkouts}
 				onRemoveMeal={handleRemoveMeal}
+        onRemoveWorkout={handleRemoveWorkout}
 			/>
 		</div>
 	);
