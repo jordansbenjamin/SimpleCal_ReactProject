@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FilterContainer from "./components/Filter";
 import ItemsContainer from "./components/Items";
 import NavbarHeader from "./components/Navbar";
@@ -10,6 +10,8 @@ export default function App() {
 	const [dailyLimit, setDailyLimit] = useState(2000);
 	const [meals, setMeals] = useState([]);
 	const [workouts, setWorkouts] = useState([]);
+	const [filteredMeals, setFilteredMeals] = useState([]);
+	const [filteredWorkouts, setFilteredWorkouts] = useState([]);
 
 	// Derived state
 	let caloriesConsumed = meals.map((meal) => meal.calories).reduce((acc, cur) => acc + cur, 0);
@@ -18,7 +20,34 @@ export default function App() {
 	let gainLoss = caloriesConsumed - caloriesBurned;
 	let progress = (gainLoss / dailyLimit) * 100;
 
+	// useEffect
+
+	// To sync main meals/workouts state with filtered states
+	useEffect(() => {
+		setFilteredMeals(meals);
+		setFilteredWorkouts(workouts);
+	}, [meals, workouts]);
+
 	// Handler functions
+
+	function handleFilter(e, filterType) {
+		const searchTerm = e.target.value.toLowerCase();
+
+		if (!searchTerm) {
+			// If the input is cleared, set back to original current state
+			setFilteredMeals(meals);
+			setFilteredWorkouts(workouts);
+			return;
+		}
+
+		if (filterType.toLowerCase() === "meals") {
+			const filtered = [...meals].filter((meal) => meal.itemName.toLowerCase().includes(searchTerm));
+			setFilteredMeals(filtered);
+		} else {
+			const filtered = [...workouts].filter((workout) => workout.itemName.toLowerCase().includes(searchTerm));
+			setFilteredWorkouts(filtered);
+		}
+	}
 
 	function handleReset() {
 		setDailyLimit(2000);
@@ -64,11 +93,11 @@ export default function App() {
 				caloriesRemaining={caloriesRemaining}
 				gainLoss={gainLoss}
 			/>
-			<ProgBarComp progress={progress}/>
-			<FilterContainer />
+			<ProgBarComp progress={progress} />
+			<FilterContainer onFilter={handleFilter} />
 			<ItemsContainer
-				meals={meals}
-				workouts={workouts}
+				meals={filteredMeals}
+				workouts={filteredWorkouts}
 				handleAddMeals={handleAddMeals}
 				handleAddWorkouts={handleAddWorkouts}
 				onRemoveMeal={handleRemoveMeal}
