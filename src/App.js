@@ -16,6 +16,7 @@ export default function App() {
 	let caloriesBurned = workouts.map((workout) => workout.calories).reduce((acc, cur) => acc + cur, 0);
 	let caloriesRemaining = dailyLimit - caloriesConsumed + caloriesBurned;
 	let gainLoss = caloriesConsumed - caloriesBurned;
+	let progress = (gainLoss / dailyLimit) * 100;
 
 	// Handler functions
 
@@ -63,7 +64,7 @@ export default function App() {
 				caloriesRemaining={caloriesRemaining}
 				gainLoss={gainLoss}
 			/>
-			<ProgBarComp />
+			<ProgBarComp progress={progress}/>
 			<FilterContainer />
 			<ItemsContainer
 				meals={meals}
