@@ -7,33 +7,35 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 
-export default function NavbarHeader({ onSetDailyLimit, onReset}) {
+export default function NavbarHeader({ onSetDailyLimit, onReset }) {
 	const [show, setShow] = useState(false);
-  const [calories, setCalories] = useState("");
+	const [calories, setCalories] = useState("");
 
-  const handleClose = () => setShow(false);
+	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
 	function handleSubmit(e) {
 		e.preventDefault();
 
-    if (!calories) return;
+		if (!calories) return;
 
-    onSetDailyLimit(calories);
+		onSetDailyLimit(calories);
 
-    setCalories('');
-    setShow(!show);
+		setCalories("");
+		setShow(!show);
 	}
 
 	return (
-		<Navbar expand="lg" className="bg-body-tertiary">
+		<Navbar expand="lg" className="bg-body-secondary">
 			<Container>
 				<Navbar.Brand href="#home" className="fs-1 fw-bold">
-					Simple Cal 🧘🏽‍♂️
+					🧘🏽‍♂️ Simple Cal
 				</Navbar.Brand>
 				<Nav className="ms-auto">
 					<NavButton handler={handleShow}>Set Daily Limit</NavButton>
-					<NavButton handler={onReset} btnType="btn-danger">Reset</NavButton>
+					<NavButton handler={onReset} btnType="btn-danger">
+						Reset
+					</NavButton>
 
 					<Modal show={show} onHide={handleClose}>
 						<Modal.Header closeButton>
