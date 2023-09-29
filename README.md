@@ -1,4 +1,14 @@
-# Getting Started with Create React App
+# Simple Cal React Project
+
+Simple Cal is a simple (yes, how original) calorie tracker application built entirely on React, it was built entirely to practice React state management and patterns.
+
+![screenshot](../screenshot.jpg)
+
+## [Link to Netlify site](https://simple-cal-react.netlify.app/)
+
+---
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
